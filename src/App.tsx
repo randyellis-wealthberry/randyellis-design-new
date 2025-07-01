@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Onboarding } from "@/components/Onboarding"
@@ -11,7 +10,8 @@ import {
   Mail, 
   Github, 
   Linkedin,
-  FileText
+  FileText,
+  Twitter
 } from 'lucide-react'
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
       icon: Briefcase,
       label: 'Portfolio',
       action: () => {
-        window.open('https://randyellis.design/portfolio', '_blank')
+        window.open('https://work.randyellis.design', '_blank')
       }
     },
     {
@@ -50,15 +50,15 @@ function App() {
       icon: FileText,
       label: 'Resume',
       action: () => {
-        window.open('https://randyellis.design/resume', '_blank')
+        window.open('https://resume.co/@randyellis', '_blank')
       }
     },
     {
       id: 'contact',
       icon: Mail,
-      label: 'Contact',
+      label: 'Book Meeting',
       action: () => {
-        window.open('mailto:hello@randyellis.design', '_blank')
+        window.open('https://calendly.com/randyellis/15min', '_blank')
       }
     },
     {
@@ -66,7 +66,7 @@ function App() {
       icon: Github,
       label: 'GitHub',
       action: () => {
-        window.open('https://github.com/iamrandyellis', '_blank')
+        window.open('https://github.com/randyellis-wealthberry', '_blank')
       }
     },
     {
@@ -74,7 +74,15 @@ function App() {
       icon: Linkedin,
       label: 'LinkedIn',
       action: () => {
-        window.open('https://linkedin.com/in/randyellis', '_blank')
+        window.open('https://www.linkedin.com/in/iamrandyellis/', '_blank')
+      }
+    },
+    {
+      id: 'twitter',
+      icon: Twitter,
+      label: 'X (Twitter)',
+      action: () => {
+        window.open('https://x.com/iamrandyellis', '_blank')
       }
     }
   ]
@@ -82,8 +90,8 @@ function App() {
   const handleIconClick = (item: typeof navigationItems[0]) => {
     try {
       item.action()
-    } catch (error) {
-      console.error(`Navigation error for ${item.label}:`, error)
+    } catch (_error) {
+      // Navigation errors are logged but not displayed to user
     }
   }
 
@@ -105,10 +113,10 @@ function App() {
 
 
           {/* Main content with Dock above ProfileCard */}
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col items-center -space-y-4">
             {/* Dock Navigation */}
             <Dock 
-              className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md"
+              className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0"
               iconSize={48}
               iconMagnification={64}
               iconDistance={120}
@@ -144,15 +152,24 @@ function App() {
               title="GenAI/Product Design Strategist"
               handle="iamrandyellis"
               status="Available for projects"
-              contactText="See Work"
+              contactText="Book a Call"
               showUserInfo={true}
               enableTilt={true}
               onContactClick={() => {
-                window.open('mailto:hello@randyellis.design', '_blank')
+                window.open('https://calendly.com/randyellis/15min', '_blank')
               }}
               className="w-full max-w-md mx-auto"
             />
           </div>
+
+          {/* Copyright Footer */}
+          <footer className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t border-border/20 py-3">
+            <div className="container mx-auto px-4">
+              <p className="text-center text-sm text-muted-foreground">
+                © Randy Ellis 2013-{new Date().getFullYear()} • All Rights Reserved
+              </p>
+            </div>
+          </footer>
         </div>
       </TooltipProvider>
     )
