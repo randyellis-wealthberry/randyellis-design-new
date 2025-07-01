@@ -50,6 +50,7 @@ export function ThemeToggle({ fillIcon = true }: ThemeToggleProps) {
         document.documentElement.classList.remove("dark");
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
