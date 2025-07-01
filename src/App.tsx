@@ -28,13 +28,19 @@ function App() {
     console.log(`Attempting to open: ${url}`)
     try {
       if (typeof window !== 'undefined') {
-        const opened = window.open(url, target, 'noopener,noreferrer')
-        if (!opened) {
-          console.error('Popup blocked or failed to open')
-          // Fallback: try to navigate in same window
+        if (target === '_self') {
+          // Navigate in same window
           window.location.href = url
         } else {
-          console.log('Window opened successfully')
+          // Open in new tab
+          const opened = window.open(url, target, 'noopener,noreferrer')
+          if (!opened) {
+            console.error('Popup blocked or failed to open')
+            // Fallback: try to navigate in same window
+            window.location.href = url
+          } else {
+            console.log('Window opened successfully')
+          }
         }
       }
     } catch (error) {
