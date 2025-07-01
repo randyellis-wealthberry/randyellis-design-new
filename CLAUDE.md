@@ -12,6 +12,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm lint` - Run ESLint
 - `pnpm type-check` - Run TypeScript type checking
 
+### Utility Commands
+- `pnpm fix` - Fix Phion configuration issues
+- `pnpm setup:browser` - Install browser extension
+- `pnpm clear:ports` - Clear development ports (5173, 3333, 3334)
+
 ### Quality Assurance
 Always run type checking after implementing features:
 ```bash
@@ -26,13 +31,19 @@ pnpm type-check
 - **Styling**: Tailwind CSS with CSS variables for theming
 - **UI Components**: Radix UI primitives with shadcn/ui styling
 - **State Management**: React hooks (useState, useContext)
+- **Forms**: React Hook Form
+- **Animation**: Framer Motion
+- **Icons**: Lucide React
+- **Notifications**: Sonner
 - **Cloud Sync**: Phion for real-time collaboration
 - **Toolbar**: @21st-extension for browser integration
 
 ### Project Structure
 - `src/App.tsx` - Main app with onboarding flow and localStorage-based state
+- `src/main.tsx` - React root with toolbar integration
 - `src/components/ui/` - Reusable UI components (shadcn/ui based)
 - `src/components/Onboarding.tsx` - First-time user experience
+- `src/components/ProfileCard/` - Main profile showcase component
 - `src/lib/utils.ts` - Utility functions (cn for className merging)
 - `src/hooks/` - Custom React hooks
 
@@ -60,3 +71,12 @@ Components use path aliases:
 - Project syncs to cloud automatically when `pnpm sync` is running
 - Toolbar enabled by default in top position
 - WebSocket connection to `wss://api.phion.dev`
+
+### Testing
+- No testing framework currently configured
+- Consider Jest, Vitest, or React Testing Library for future test implementation
+
+## Component Registry Integration
+This project uses JSRepo for component discovery and sharing:
+- Configuration in `jsrepo.json`
+- Enables sharing and reusing UI components across projects
