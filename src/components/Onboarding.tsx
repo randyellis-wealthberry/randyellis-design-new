@@ -16,7 +16,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     // Check for Phion toolbar in DOM
     const checkToolbar = () => {
       const phionContainer = document.getElementById('phion-root-container')
-      const phionConfig = (window as any).PHION_CONFIG
+      const phionConfig = (window as unknown as { PHION_CONFIG?: unknown }).PHION_CONFIG
       setHasRealToolbar(!!phionContainer || !!phionConfig)
     }
     
