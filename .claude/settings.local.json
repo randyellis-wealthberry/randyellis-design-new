@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:reactbits.dev)",
       "Bash(cp:*)",
-      "Bash(pnpm type-check:*)"
+      "Bash(pnpm type-check:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
