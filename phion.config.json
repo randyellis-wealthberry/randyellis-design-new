@@ -6,6 +6,6 @@
   "toolbar": {
     "enabled": true,
     "position": "top",
-    "autoOpen": true
+    "autoOpen": false
   }
 }
