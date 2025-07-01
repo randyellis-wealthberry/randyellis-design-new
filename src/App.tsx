@@ -35,9 +35,7 @@ function App() {
           // Open in new tab
           const opened = window.open(url, target, 'noopener,noreferrer')
           if (!opened) {
-            console.error('Popup blocked or failed to open')
-            // Fallback: try to navigate in same window
-            window.location.href = url
+            console.error('Popup blocked - new tab could not be opened')
           } else {
             console.log('Window opened successfully')
           }
