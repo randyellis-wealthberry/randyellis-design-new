@@ -54,8 +54,32 @@
 }
 
 @layer base {
+  /* Reset default browser outline behavior */
   * {
     @apply border-border;
+    outline: none;
+  }
+
+  /* Remove unwanted focus outlines from non-interactive elements */
+  *:not(button):not(input):not(textarea):not(select):not(a):not([tabindex]):not([role="button"]) {
+    outline: none !important;
+  }
+
+  /* Only show focus outlines on keyboard navigation */
+  *:focus:not(:focus-visible) {
+    outline: none !important;
+  }
+
+  /* Ensure proper focus styles for interactive elements only */
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
   }
 
   body {
@@ -68,4 +92,26 @@
   #root {
     min-height: 100vh;
   }
+}
+/* Disable ProfileCard hover glow effects only */
+.pc-card-wrapper:hover,
+.pc-card-wrapper.active {
+  --card-opacity: 0 !important;
+}
+
+.pc-card-wrapper:hover .pc-card::before,
+.pc-card-wrapper.active .pc-card::before {
+  filter: contrast(0.8) saturate(1.2) blur(32px) opacity(0) !important;
+}
+
+.pc-card:hover .pc-shine,
+.pc-card.active .pc-shine {
+  filter: brightness(0.75) contrast(1.1) saturate(0.2) opacity(0.25) !important;
+}
+
+.pc-card:hover .pc-shine::before,
+.pc-card.active .pc-shine::before,
+.pc-card:hover .pc-shine::after,
+.pc-card.active .pc-shine::after {
+  opacity: 0 !important;
 }
