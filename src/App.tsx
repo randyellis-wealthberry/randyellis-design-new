@@ -133,7 +133,7 @@ function App() {
           <div className="flex flex-col items-center -space-y-12">
             {/* Dock Navigation */}
             <Dock 
-              className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0"
+              className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0 relative z-50"
               iconSize={48}
               iconMagnification={64}
               iconDistance={120}
@@ -144,17 +144,18 @@ function App() {
                 return (
                   <DockIcon
                     key={item.id}
-                    className="bg-background/50 hover:bg-accent/80 border border-border/20 hover:border-accent-foreground/20 transition-all duration-200 cursor-pointer"
+                    className="bg-background/50 hover:bg-accent/80 border border-border/20 hover:border-accent-foreground/20 transition-all duration-200 cursor-pointer relative z-50"
                     onClick={() => handleIconClick(item)}
                     onKeyDown={(event) => handleIconKeyDown(event, item)}
                     tabIndex={0}
                     role="button"
                     aria-label={`Navigate to ${item.label}`}
                     title={item.label}
+                    style={{ pointerEvents: 'auto' }}
                   >
                     <IconComponent 
                       size={24} 
-                      className="text-foreground hover:text-accent-foreground transition-colors duration-200" 
+                      className="text-foreground hover:text-accent-foreground transition-colors duration-200 pointer-events-none" 
                     />
                   </DockIcon>
                 )
