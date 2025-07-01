@@ -10,6 +10,7 @@ function App() {
     return localStorage.getItem('phion-onboarding-completed') === 'true'
   })
 
+
   const handleOnboardingComplete = () => {
     localStorage.setItem('phion-onboarding-completed', 'true')
     setShowMainApp(true)
@@ -50,7 +51,7 @@ function App() {
             onContactClick={() => {
               window.open('mailto:hello@randyellis.design', '_blank')
             }}
-            className="w-full max-w-sm mx-auto"
+            className="w-full max-w-md mx-auto"
           />
         </div>
       </TooltipProvider>
