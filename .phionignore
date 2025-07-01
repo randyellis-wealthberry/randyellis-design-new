@@ -1,0 +1,16 @@
+# Phion ignore file - prevent these files/folders from being synced
+# This preserves local assets that shouldn't be overwritten by sync
+
+# Public folder assets
+public/profile-avatar.png
+public/mini-avatar.png
+public/*.png
+public/*.jpg
+public/*.jpeg
+public/*.svg
+public/*.webp
+public/*.gif
+
+# Other assets you might want to preserve
+public/images/
+public/assets/
