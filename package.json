@@ -47,7 +47,7 @@
     "framer-motion": "^12.20.1",
     "lucide-react": "^0.294.0",
     "motion": "^12.18.1",
-    "phion": "latest",
+    "phion": "^0.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
