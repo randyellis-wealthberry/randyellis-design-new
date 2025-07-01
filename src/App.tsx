@@ -15,9 +15,8 @@ import {
 } from 'lucide-react'
 
 function App() {
-  const [showMainApp, setShowMainApp] = useState(() => {
-    return localStorage.getItem('phion-onboarding-completed') === 'true'
-  })
+  // Always show main app, suppress onboarding for portfolio visitors
+  const [showMainApp, setShowMainApp] = useState(true)
 
   const handleOnboardingComplete = () => {
     localStorage.setItem('phion-onboarding-completed', 'true')
@@ -103,18 +102,7 @@ function App() {
             <ThemeToggle />
           </div>
           
-          <div className="fixed bottom-6 left-6">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => {
-                localStorage.removeItem('phion-onboarding-completed')
-                window.location.reload()
-              }}
-            >
-              Reset Onboarding
-            </Button>
-          </div>
+
 
           {/* Main content with Dock above ProfileCard */}
           <div className="flex flex-col items-center gap-1">
