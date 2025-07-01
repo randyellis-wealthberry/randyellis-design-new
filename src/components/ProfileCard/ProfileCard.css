@@ -32,25 +32,42 @@
   --card-radius: 30px;
 }
 
+/* Utility classes for different centering contexts */
+.pc-card-wrapper.pc-inline {
+  min-height: auto;
+  display: inline-flex;
+  padding: 0;
+}
+
+.pc-card-wrapper.pc-contained {
+  min-height: 80vh;
+}
+
 .pc-card-wrapper {
   perspective: 500px;
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background: transparent;
 }
 
-.pc-card-wrapper::before {
+.pc-card::before {
   content: '';
   position: absolute;
-  inset: -10px;
-  background: inherit;
-  background-position: inherit;
-  border-radius: inherit;
+  inset: -40px;
+  background: var(--behind-gradient);
+  border-radius: calc(var(--card-radius) + 40px);
   transition: all 0.5s ease;
-  filter: contrast(2) saturate(2) blur(36px);
-  transform: scale(0.8) translate3d(0, 0, 0.1px);
-  background-size: 100% 100%;
-  background-image: var(--behind-gradient);
+  filter: contrast(2) saturate(2) blur(36px) opacity(0);
+  transform: translate3d(0, 0, -0.1px);
+  z-index: -1;
 }
 
 .pc-card-wrapper:hover,
@@ -58,15 +75,16 @@
   --card-opacity: 1;
 }
 
-.pc-card-wrapper:hover::before,
-.pc-card-wrapper.active::before {
+.pc-card-wrapper:hover .pc-card::before,
+.pc-card-wrapper.active .pc-card::before {
   filter: contrast(1) saturate(2) blur(40px) opacity(1);
-  transform: scale(0.9) translate3d(0, 0, 0.1px);
 }
 
 .pc-card {
-  height: 80svh;
+  height: min(80vh, 540px);
+  width: min(80vw, 390px);
   max-height: 540px;
+  max-width: 390px;
   display: grid;
   aspect-ratio: 0.718;
   border-radius: var(--card-radius);
@@ -285,6 +303,21 @@
   transition: all 0.2s ease;
 }
 
+.pc-contact-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.pc-contact-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.pc-contact-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
 .pc-content {
   max-height: 100%;
   overflow: hidden;
@@ -351,9 +384,15 @@
 }
 
 @media (max-width: 768px) {
+  .pc-card-wrapper {
+    padding: 15px;
+  }
+
   .pc-card {
-    height: 70svh;
+    height: min(70vh, 450px);
+    width: min(90vw, 320px);
     max-height: 450px;
+    max-width: 320px;
   }
 
   .pc-details {
@@ -361,7 +400,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(4svh, 2.5em);
+    font-size: min(4vh, 2.5em);
   }
 
   .pc-details p {
@@ -376,8 +415,8 @@
   }
 
   .pc-mini-avatar {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .pc-user-details {
@@ -389,19 +428,25 @@
   }
 
   .pc-status {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .pc-contact-btn {
     padding: 6px 12px;
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
+  .pc-card-wrapper {
+    padding: 10px;
+  }
+
   .pc-card {
-    height: 60svh;
+    height: min(65vh, 380px);
+    width: min(95vw, 280px);
     max-height: 380px;
+    max-width: 280px;
   }
 
   .pc-details {
@@ -409,7 +454,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(3.5svh, 2em);
+    font-size: min(3.5vh, 2em);
   }
 
   .pc-details p {
@@ -422,12 +467,12 @@
     left: 12px;
     right: 12px;
     padding: 8px 10px;
-    border-radius: 50px;
+    border-radius: 15px;
   }
 
   .pc-mini-avatar {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 
   .pc-user-details {
@@ -439,24 +484,30 @@
   }
 
   .pc-status {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .pc-contact-btn {
     padding: 5px 10px;
     font-size: 10px;
-    border-radius: 50px;
+    border-radius: 8px;
   }
 }
 
 @media (max-width: 320px) {
+  .pc-card-wrapper {
+    padding: 8px;
+  }
+
   .pc-card {
-    height: 55svh;
+    height: min(60vh, 320px);
+    width: min(98vw, 240px);
     max-height: 320px;
+    max-width: 240px;
   }
 
   .pc-details h3 {
-    font-size: min(3svh, 1.5em);
+    font-size: min(3vh, 1.5em);
   }
 
   .pc-details p {
@@ -465,12 +516,12 @@
 
   .pc-user-info {
     padding: 6px 8px;
-    border-radius: 50px;
+    border-radius: 12px;
   }
 
   .pc-mini-avatar {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
 
   .pc-user-details {
@@ -482,12 +533,12 @@
   }
 
   .pc-status {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .pc-contact-btn {
     padding: 4px 8px;
     font-size: 9px;
-    border-radius: 50px;
+    border-radius: 6px;
   }
 }
