@@ -250,9 +250,6 @@
   gap: 12px;
 }
 
-.pc-social-links {
-  margin-right: 8px;
-}
 
 .pc-user-details {
   display: flex;
@@ -451,9 +448,6 @@
     gap: 8px;
   }
 
-  .pc-social-links {
-    margin-right: 4px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -516,9 +510,6 @@
     gap: 6px;
   }
 
-  .pc-social-links {
-    margin-right: 2px;
-  }
 }
 
 @media (max-width: 320px) {
@@ -573,7 +564,4 @@
     gap: 4px;
   }
 
-  .pc-social-links {
-    margin-right: 0px;
-  }
 }
