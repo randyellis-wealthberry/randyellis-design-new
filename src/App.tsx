@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Onboarding } from "@/components/Onboarding"
+import ProfileCard from "@/components/ProfileCard/ProfileCard"
 
 function App() {
   const [showMainApp, setShowMainApp] = useState(() => {
@@ -35,30 +36,21 @@ function App() {
             </Button>
           </div>
 
-          <div className="max-w-md mx-auto text-center space-y-8">
-            <div>
-              <h1 className="text-3xl font-light mb-3">Ready to Build</h1>
-              <p className="text-muted-foreground">
-                Press ⌘I to open AI chat and try these prompts:
-              </p>
-            </div>
-
-            <div className="space-y-3 text-left">
-              <div className="p-4 bg-muted/50 rounded-lg">
-                <p className="font-medium">Create a calculator app with iOS-style design</p>
-              </div>
-              <div className="p-4 bg-muted/50 rounded-lg">
-                <p className="font-medium">Build a simple todo app with animations</p>
-              </div>
-              <div className="p-4 bg-muted/50 rounded-lg">
-                <p className="font-medium">Create a weather widget with 5-day forecast</p>
-              </div>
-            </div>
-
-            <div className="text-sm text-muted-foreground">
-              <p>Press ⌘. to switch between Ask and Agent modes</p>
-            </div>
-          </div>
+          <ProfileCard
+            avatarUrl="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            miniAvatarUrl="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80"
+            name="Randy Ellis"
+            title="Creative Developer"
+            handle="randyellis"
+            status="Available for projects"
+            contactText="Get in touch"
+            showUserInfo={true}
+            enableTilt={true}
+            onContactClick={() => {
+              window.open('mailto:hello@randyellis.design', '_blank')
+            }}
+            className="w-full max-w-sm mx-auto"
+          />
         </div>
       </TooltipProvider>
     )
