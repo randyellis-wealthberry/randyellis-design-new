@@ -303,22 +303,24 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                     <div className="pc-status">{status}</div>
                   </div>
                 </div>
-                <button
-                  className="pc-contact-btn"
-                  onClick={handleContactClick}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      handleContactClick();
-                    }
-                  }}
-                  style={{ pointerEvents: "auto" }}
-                  type="button"
-                  aria-label={`Contact ${name || "user"}`}
-                  tabIndex={0}
-                >
-                  {contactText}
-                </button>
+                <div className="pc-actions">
+                  <button
+                    className="pc-contact-btn"
+                    onClick={handleContactClick}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleContactClick();
+                      }
+                    }}
+                    style={{ pointerEvents: "auto" }}
+                    type="button"
+                    aria-label={`Contact ${name || "user"}`}
+                    tabIndex={0}
+                  >
+                    {contactText}
+                  </button>
+                </div>
               </div>
             )}
           </div>
