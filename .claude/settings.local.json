@@ -4,7 +4,14 @@
       "WebFetch(domain:reactbits.dev)",
       "Bash(cp:*)",
       "Bash(pnpm type-check:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(pnpm add:*)",
+      "Bash(cat:*)",
+      "Bash(git restore:*)",
+      "Bash(pnpm setup:*)",
+      "Bash(source:*)",
+      "Bash(export:*)",
+      "Bash(shadcn-ui --version)"
     ],
     "deny": []
   }
