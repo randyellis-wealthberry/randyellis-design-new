@@ -117,7 +117,7 @@ function App() {
           </div>
 
           {/* Main content with Dock above ProfileCard */}
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-1">
             {/* Dock Navigation */}
             <Dock 
               className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md"
