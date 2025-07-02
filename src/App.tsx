@@ -194,8 +194,8 @@ function App() {
 
             {/* ProfileCard */}
             <ProfileCard
-              avatarUrl="/profile-avatar.png"
-              miniAvatarUrl="/mini-avatar.png"
+              avatarUrl="/randy-ellis-illustration.png"
+              miniAvatarUrl="/randy-ellis-photo.png"
               name="Randy Ellis"
               title="GenAI/Product Design Strategist"
               handle="iamrandyellis"

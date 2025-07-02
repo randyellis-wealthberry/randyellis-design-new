@@ -20,7 +20,9 @@
       "Bash(git checkout:*)",
       "Bash(vercel:*)",
       "Bash(pnpm build)",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "Bash(grep:*)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
