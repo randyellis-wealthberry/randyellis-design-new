@@ -11,7 +11,7 @@ interface DeviceCapabilities {
 }
 
 const MOBILE_BREAKPOINT = 768
-const TABLET_BREAKPOINT = 1024
+const TABLET_BREAKPOINT = 1366 // Increased to catch more tablets
 
 export function useDeviceDetection(): DeviceCapabilities {
   const [capabilities, setCapabilities] = useState<DeviceCapabilities>({
@@ -58,8 +58,28 @@ export function useDeviceDetection(): DeviceCapabilities {
 
       // Combine screen size and user agent detection
       const finalIsMobile = (isMobile && isTouchDevice) || (isMobileUA && !isTabletUA)
-      const finalIsTablet = (isTablet) || (isTabletUA) || (isTouchDevice && screenWidth >= MOBILE_BREAKPOINT && screenWidth < TABLET_BREAKPOINT)
+      const finalIsTablet = (isTablet) || (isTabletUA) || (isTouchDevice && screenWidth >= MOBILE_BREAKPOINT && screenWidth <= TABLET_BREAKPOINT)
       const finalIsDesktop = !finalIsMobile && !finalIsTablet
+
+      // Debug logging
+      console.log('🔍 Device Detection Debug:', {
+        userAgent,
+        screenWidth,
+        isTouchDevice,
+        isMobile,
+        isTablet,
+        hasAccelerometer,
+        hasGyroscope,
+        isMobileUA,
+        isTabletUA,
+        finalIsMobile,
+        finalIsTablet,
+        finalIsDesktop,
+        maxTouchPoints: navigator.maxTouchPoints,
+        ontouchstart: 'ontouchstart' in window,
+        DeviceOrientationEvent: typeof DeviceOrientationEvent,
+        DeviceMotionEvent: typeof DeviceMotionEvent
+      })
 
       setCapabilities({
         isTouchDevice,

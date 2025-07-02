@@ -91,6 +91,18 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     deviceCapabilities.hasAccelerometer &&
     accelerometer.isSupported;
 
+  // Debug logging
+  console.log('🎴 ProfileCard: Accelerometer decision:', {
+    enableAccelerometer,
+    isMobile: deviceCapabilities.isMobile,
+    isTablet: deviceCapabilities.isTablet,
+    hasAccelerometer: deviceCapabilities.hasAccelerometer,
+    accelerometerSupported: accelerometer.isSupported,
+    accelerometerPermission: accelerometer.hasPermission,
+    shouldUseAccelerometer,
+    accelerometerData: accelerometer.data
+  })
+
   const animationHandlers = useMemo(() => {
     if (!enableTilt) return null;
 
@@ -262,9 +274,21 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   // Auto-request accelerometer permission on supported devices
   useEffect(() => {
     if (shouldUseAccelerometer && !accelerometer.hasPermission && accelerometer.isSupported) {
+      console.log('🎴 ProfileCard: Auto-requesting accelerometer permission')
       accelerometer.requestPermission().catch(console.warn);
     }
   }, [shouldUseAccelerometer, accelerometer.hasPermission, accelerometer.isSupported, accelerometer.requestPermission]);
+
+  // Manual permission request handler for debugging
+  const handleRequestPermission = useCallback(async () => {
+    console.log('🎴 ProfileCard: Manual permission request triggered')
+    try {
+      const granted = await accelerometer.requestPermission()
+      console.log('🎴 ProfileCard: Manual permission result:', granted)
+    } catch (error) {
+      console.error('🎴 ProfileCard: Manual permission error:', error)
+    }
+  }, [accelerometer.requestPermission])
 
   useEffect(() => {
     if (!enableTilt || !animationHandlers || shouldUseAccelerometer) return;
@@ -384,6 +408,38 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                   >
                     {contactText}
                   </button>
+                </div>
+              </div>
+            )}
+            
+            {/* Debug button for accelerometer on supported devices */}
+            {enableAccelerometer && accelerometer.isSupported && !accelerometer.hasPermission && (
+              <div className="pc-debug-controls" style={{
+                position: 'absolute',
+                top: '10px',
+                left: '10px',
+                zIndex: 10,
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                padding: '8px',
+                borderRadius: '8px',
+                backdropFilter: 'blur(10px)'
+              }}>
+                <button
+                  onClick={handleRequestPermission}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    color: 'white',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    fontSize: '12px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Enable Tilt
+                </button>
+                <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.8)', marginTop: '4px' }}>
+                  Tap to enable motion
                 </div>
               </div>
             )}
