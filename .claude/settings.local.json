@@ -11,7 +11,8 @@
       "Bash(pnpm setup:*)",
       "Bash(source:*)",
       "Bash(export:*)",
-      "Bash(shadcn-ui --version)"
+      "Bash(shadcn-ui --version)",
+      "Bash(git merge:*)"
     ],
     "deny": []
   }
