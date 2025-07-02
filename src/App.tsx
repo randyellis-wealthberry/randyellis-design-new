@@ -155,44 +155,50 @@ function App() {
       <TooltipProvider>
         {/* 21st.dev Toolbar */}
         {renderToolbar()}
-        <div className="min-h-screen bg-background flex items-start justify-center pt-6 p-2">
-          <div className="fixed top-6 right-6">
+        
+        {/* Fixed Single Column Dock */}
+        <Dock 
+          fixed={true}
+          position="left"
+          layout="column"
+          className="bg-background/95 border-border/50 shadow-lg backdrop-blur-md"
+          iconSize={40}
+          iconMagnification={52}
+          iconDistance={100}
+          direction="center"
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          {navigationItems.map((item) => {
+            const IconComponent = item.icon
+            return (
+              <DockIcon
+                key={item.id}
+                className="border border-border/20 hover:border-accent-foreground/20 transition-[border-color,transform] duration-200 cursor-pointer"
+                onClick={() => handleIconClick(item)}
+                onKeyDown={(event) => handleIconKeyDown(event, item)}
+                tabIndex={0}
+                role="button"
+                aria-label={`Navigate to ${item.label}`}
+                title={item.label}
+              >
+                <IconComponent 
+                  size={20} 
+                  className="text-foreground hover:text-accent-foreground transition-colors duration-200" 
+                />
+              </DockIcon>
+            )
+          })}
+        </Dock>
+
+        {/* Main content area with left margin to account for fixed dock */}
+        <div className="min-h-screen bg-background flex items-start justify-center pt-6 p-2 pl-20">
+          <div className="fixed top-6 right-6 z-50">
             <ThemeToggle />
           </div>
           
-          {/* Main content with Dock above ProfileCard */}
-          <div className="flex flex-col items-center">
-            {/* Dock Navigation */}
-            <Dock 
-              className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0 relative z-50"
-              iconSize={48}
-              iconMagnification={64}
-              iconDistance={120}
-              direction="middle"
-            >
-              {navigationItems.map((item) => {
-                const IconComponent = item.icon
-                return (
-                  <DockIcon
-                    key={item.id}
-                    className="border border-border/20 hover:border-accent-foreground/20 transition-[border-color,transform] duration-200 cursor-pointer relative z-50"
-                    onClick={() => handleIconClick(item)}
-                    onKeyDown={(event) => handleIconKeyDown(event, item)}
-                    tabIndex={0}
-                    role="button"
-                    aria-label={`Navigate to ${item.label}`}
-                    title={item.label}
-                    style={{ pointerEvents: 'auto' }}
-                  >
-                    <IconComponent 
-                      size={24} 
-                      className="text-foreground hover:text-accent-foreground transition-colors duration-200 pointer-events-none" 
-                    />
-                  </DockIcon>
-                )
-              })}
-            </Dock>
-
+          {/* Main content */}
+          <div className="flex flex-col items-center w-full max-w-4xl">
             {/* Hero Pill */}
             <AnimatedHeroPill
               className="relative z-40 my-8"
@@ -213,12 +219,12 @@ function App() {
               enableAccelerometer={deviceCapabilities.isMobile || deviceCapabilities.isTablet}
               accelerometerSensitivity={0.8}
               onContactClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
-              className="w-full max-w-md mx-auto mt-8"
+              className="w-full max-w-md mx-auto"
             />
           </div>
 
           {/* Copyright Footer */}
-          <footer className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t border-border/20 py-2">
+          <footer className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t border-border/20 py-2 z-40">
             <div className="container mx-auto px-4">
               <p className="text-center text-[10px] text-muted-foreground">
                 © Randy Ellis 2013-{new Date().getFullYear()} • All Rights Reserved
