@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { Onboarding } from "@/components/Onboarding"
 import ProfileCard from "@/components/ProfileCard/ProfileCard"
 import { Dock, DockIcon } from '@/components/magicui/dock'
+import { AnimatedHeroPill } from '@/components/ui/hero-pill'
 import { useDeviceDetection } from "@/hooks"
 // 21st.dev Toolbar imports
 import { StagewiseToolbar } from "@21st-extension/toolbar-react"
@@ -154,13 +155,13 @@ function App() {
       <TooltipProvider>
         {/* 21st.dev Toolbar */}
         {renderToolbar()}
-        <div className="min-h-screen bg-background flex items-center justify-center p-2">
+        <div className="min-h-screen bg-background flex items-start justify-center pt-16 p-2">
           <div className="fixed top-6 right-6">
             <ThemeToggle />
           </div>
           
           {/* Main content with Dock above ProfileCard */}
-          <div className="flex flex-col items-center -space-y-12">
+          <div className="flex flex-col items-center space-y-2">
             {/* Dock Navigation */}
             <Dock 
               className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0 relative z-50"
@@ -192,6 +193,12 @@ function App() {
               })}
             </Dock>
 
+            {/* Hero Pill */}
+            <AnimatedHeroPill
+              className="relative z-40"
+              onClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
+            />
+
             {/* ProfileCard */}
             <ProfileCard
               avatarUrl="/randy-ellis-illustration.png"
@@ -199,14 +206,14 @@ function App() {
               name="Randy Ellis"
               title="GenAI/Product Design Strategist"
               handle="iamrandyellis"
-              status="Available for projects"
+              status="Online"
               contactText="Book a Call"
               showUserInfo={true}
               enableTilt={true}
               enableAccelerometer={deviceCapabilities.isMobile || deviceCapabilities.isTablet}
               accelerometerSensitivity={0.8}
               onContactClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
-              className="w-full max-w-md mx-auto"
+              className="w-full max-w-md mx-auto -mt-8"
             />
           </div>
 
