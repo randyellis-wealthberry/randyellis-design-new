@@ -2,7 +2,7 @@
 	Installed from https://reactbits.dev/ts/default/
 */
 
-import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useEffect, useRef, useCallback, useMemo, useState } from "react";
 import "./ProfileCard.css";
 import { useAccelerometer, useDeviceDetection } from "@/hooks";
 
@@ -84,6 +84,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   // Device detection and accelerometer hooks
   const deviceCapabilities = useDeviceDetection();
   const accelerometer = useAccelerometer();
+  
+  // Touch state tracking for dual input mode
+  const [isUserTouching, setIsUserTouching] = useState(false);
   
   // Determine if accelerometer should be active
   const shouldUseAccelerometer = enableAccelerometer && 
@@ -208,6 +211,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
     if (!card || !wrap || !animationHandlers) return;
 
+    // Set touch state to pause accelerometer
+    setIsUserTouching(true);
+    
     animationHandlers.cancelAnimation();
     wrap.classList.add("active");
     card.classList.add("active");
@@ -219,6 +225,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       const wrap = wrapRef.current;
 
       if (!card || !wrap || !animationHandlers) return;
+
+      // Clear touch state to resume accelerometer
+      setIsUserTouching(false);
 
       animationHandlers.createSmoothAnimation(
         ANIMATION_CONFIG.SMOOTH_DURATION,
@@ -235,7 +244,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
   // Accelerometer effect
   useEffect(() => {
-    if (!shouldUseAccelerometer || !animationHandlers || !accelerometer.hasPermission) return;
+    if (!shouldUseAccelerometer || !animationHandlers || !accelerometer.hasPermission || isUserTouching) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -258,7 +267,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     wrap.classList.add("active");
     card.classList.add("active");
 
-  }, [accelerometer.data, shouldUseAccelerometer, animationHandlers, accelerometer.hasPermission]);
+  }, [accelerometer.data, shouldUseAccelerometer, animationHandlers, accelerometer.hasPermission, isUserTouching]);
 
   // Auto-request accelerometer permission on supported devices
   useEffect(() => {
@@ -268,7 +277,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   }, [shouldUseAccelerometer, accelerometer.hasPermission, accelerometer.isSupported, accelerometer.requestPermission]);
 
   useEffect(() => {
-    if (!enableTilt || !animationHandlers || shouldUseAccelerometer) return;
+    if (!enableTilt || !animationHandlers) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -307,7 +316,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     handlePointerMove,
     handlePointerEnter,
     handlePointerLeave,
-    shouldUseAccelerometer,
   ]);
 
   const cardStyle = useMemo(
