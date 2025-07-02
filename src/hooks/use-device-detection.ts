@@ -61,26 +61,6 @@ export function useDeviceDetection(): DeviceCapabilities {
       const finalIsTablet = (isTablet) || (isTabletUA) || (isTouchDevice && screenWidth >= MOBILE_BREAKPOINT && screenWidth <= TABLET_BREAKPOINT)
       const finalIsDesktop = !finalIsMobile && !finalIsTablet
 
-      // Debug logging
-      console.log('🔍 Device Detection Debug:', {
-        userAgent,
-        screenWidth,
-        isTouchDevice,
-        isMobile,
-        isTablet,
-        hasAccelerometer,
-        hasGyroscope,
-        isMobileUA,
-        isTabletUA,
-        finalIsMobile,
-        finalIsTablet,
-        finalIsDesktop,
-        maxTouchPoints: navigator.maxTouchPoints,
-        ontouchstart: 'ontouchstart' in window,
-        DeviceOrientationEvent: typeof DeviceOrientationEvent,
-        DeviceMotionEvent: typeof DeviceMotionEvent
-      })
-
       setCapabilities({
         isTouchDevice,
         isMobile: finalIsMobile,
