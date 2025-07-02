@@ -39,3 +39,4 @@ Thumbs.db
 .temp 
 .vercel
 .snapshots/
+.claude/
