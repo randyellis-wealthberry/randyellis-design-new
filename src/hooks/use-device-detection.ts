@@ -35,7 +35,7 @@ export function useDeviceDetection(): DeviceCapabilities {
       const isTouchDevice = 
         'ontouchstart' in window ||
         navigator.maxTouchPoints > 0 ||
-        (navigator as any).msMaxTouchPoints > 0
+        (navigator as unknown as { msMaxTouchPoints?: number }).msMaxTouchPoints > 0
 
       // Screen size based detection
       const isMobile = screenWidth < MOBILE_BREAKPOINT
@@ -47,7 +47,7 @@ export function useDeviceDetection(): DeviceCapabilities {
       // Gyroscope support (more specific)
       const hasGyroscope = 
         typeof DeviceMotionEvent !== 'undefined' &&
-        typeof (DeviceMotionEvent as any).requestPermission !== 'undefined'
+        typeof (DeviceMotionEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission !== 'undefined'
 
       // Additional mobile/tablet detection via user agent
       const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i

@@ -7,6 +7,8 @@ import "./index.css"
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
-    <StagewiseToolbar />
   </React.StrictMode>,
 )
+
+// Initialize toolbar outside of StrictMode to avoid double initialization
+ReactDOM.createRoot(document.createElement("div")).render(<StagewiseToolbar />)

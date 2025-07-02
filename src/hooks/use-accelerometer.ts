@@ -26,15 +26,15 @@ export function useAccelerometer(): UseAccelerometerReturn {
     // Check if DeviceOrientationEvent exists and has requestPermission method
     if (
       typeof DeviceOrientationEvent !== 'undefined' &&
-      typeof (DeviceOrientationEvent as any).requestPermission === 'function'
+      typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function'
     ) {
       try {
-        const permission = await (DeviceOrientationEvent as any).requestPermission()
+        const permission = await (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission()
         const granted = permission === 'granted'
         setHasPermission(granted)
         return granted
       } catch (error) {
-        console.warn('Error requesting device orientation permission:', error)
+        // Error requesting device orientation permission - silently fail
         return false
       }
     }
@@ -58,7 +58,7 @@ export function useAccelerometer(): UseAccelerometerReturn {
     if (!supported) return
 
     // For non-iOS devices, automatically set permission to true
-    if (typeof (DeviceOrientationEvent as any).requestPermission !== 'function') {
+    if (typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission !== 'function') {
       setHasPermission(true)
     }
 

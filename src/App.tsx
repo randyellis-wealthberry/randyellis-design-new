@@ -34,7 +34,7 @@ function App() {
         />
       )
     } catch (error) {
-      console.warn('21st.dev Toolbar failed to load:', error)
+      // 21st.dev Toolbar failed to load - silently fail
       return null
     }
   }
@@ -49,7 +49,7 @@ function App() {
 
   // Safe window operations with error handling
   const safeWindowOpen = (url: string, target: string = '_blank') => {
-    console.log(`Attempting to open: ${url}`)
+    // Attempting to open URL
     try {
       if (typeof window !== 'undefined') {
         if (target === '_self') {
@@ -59,31 +59,31 @@ function App() {
           // Open in new tab
           const opened = window.open(url, target, 'noopener,noreferrer')
           if (!opened) {
-            console.error('Popup blocked - new tab could not be opened')
+            // Popup blocked - new tab could not be opened
           } else {
-            console.log('Window opened successfully')
+            // Window opened successfully
           }
         }
       }
     } catch (error) {
-      console.error('Error opening window:', error)
+      // Error opening window - silently fail
     }
   }
 
   const safeScrollToTop = () => {
-    console.log('Attempting scroll to top')
+    // Attempting scroll to top
     try {
       if (typeof window !== 'undefined') {
         if (window.scrollY === 0) {
-          console.log('Reloading page')
+          // Reloading page
           window.location.reload()
         } else {
-          console.log('Scrolling to top')
+          // Scrolling to top
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }
       }
     } catch (error) {
-      console.error('Error with scroll operation:', error)
+      // Error with scroll operation - silently fail
     }
   }
 
@@ -134,11 +134,11 @@ function App() {
   ]
 
   const handleIconClick = (item: typeof navigationItems[0]) => {
-    console.log(`Dock button clicked: ${item.label}`) // Debug log
+    // Dock button clicked
     try {
       item.action()
     } catch (error) {
-      console.error(`Navigation error for ${item.label}:`, error)
+      // Navigation error - silently fail
     }
   }
 

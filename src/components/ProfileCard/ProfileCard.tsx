@@ -272,9 +272,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   // Auto-request accelerometer permission on supported devices
   useEffect(() => {
     if (shouldUseAccelerometer && !accelerometer.hasPermission && accelerometer.isSupported) {
-      accelerometer.requestPermission().catch(console.warn);
+      accelerometer.requestPermission().catch(() => {});
     }
-  }, [shouldUseAccelerometer, accelerometer.hasPermission, accelerometer.isSupported, accelerometer.requestPermission]);
+  }, [shouldUseAccelerometer, accelerometer.hasPermission, accelerometer.isSupported, accelerometer.requestPermission, accelerometer]);
 
   useEffect(() => {
     if (!enableTilt || !animationHandlers) return;
