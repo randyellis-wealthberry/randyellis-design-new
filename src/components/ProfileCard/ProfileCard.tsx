@@ -4,6 +4,7 @@
 
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import "./ProfileCard.css";
+import { useAccelerometer, useDeviceDetection } from "@/hooks";
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -14,6 +15,8 @@ interface ProfileCardProps {
   showBehindGradient?: boolean;
   className?: string;
   enableTilt?: boolean;
+  enableAccelerometer?: boolean;
+  accelerometerSensitivity?: number;
   miniAvatarUrl?: string;
   name?: string;
   title?: string;
@@ -64,6 +67,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   showBehindGradient = true,
   className = "",
   enableTilt = true,
+  enableAccelerometer = false,
+  accelerometerSensitivity = 1,
   miniAvatarUrl,
   name = "Randy Ellis",
   title = "Senior Front-End Developer",
@@ -75,6 +80,16 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Device detection and accelerometer hooks
+  const deviceCapabilities = useDeviceDetection();
+  const accelerometer = useAccelerometer();
+  
+  // Determine if accelerometer should be active
+  const shouldUseAccelerometer = enableAccelerometer && 
+    (deviceCapabilities.isMobile || deviceCapabilities.isTablet) && 
+    deviceCapabilities.hasAccelerometer &&
+    accelerometer.isSupported;
 
   const animationHandlers = useMemo(() => {
     if (!enableTilt) return null;
@@ -85,16 +100,30 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       offsetX: number,
       offsetY: number,
       card: HTMLElement,
-      wrap: HTMLElement
+      wrap: HTMLElement,
+      isAccelerometerInput = false
     ) => {
       const width = card.clientWidth;
       const height = card.clientHeight;
 
-      const percentX = clamp((100 / width) * offsetX);
-      const percentY = clamp((100 / height) * offsetY);
+      let percentX: number;
+      let percentY: number;
+
+      if (isAccelerometerInput) {
+        // For accelerometer input, offsetX and offsetY are normalized values (-1 to 1)
+        // Convert to percentage (0 to 100)
+        percentX = clamp(((offsetX + 1) / 2) * 100);
+        percentY = clamp(((offsetY + 1) / 2) * 100);
+      } else {
+        // For pointer input, use existing logic
+        percentX = clamp((100 / width) * offsetX);
+        percentY = clamp((100 / height) * offsetY);
+      }
 
       const centerX = percentX - 50;
       const centerY = percentY - 50;
+
+      const rotationMultiplier = isAccelerometerInput ? accelerometerSensitivity : 1;
 
       const properties = {
         "--pointer-x": `${percentX}%`,
@@ -104,8 +133,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         "--pointer-from-center": `${clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
         "--pointer-from-top": `${percentY / 100}`,
         "--pointer-from-left": `${percentX / 100}`,
-        "--rotate-x": `${round(-(centerX / 5))}deg`,
-        "--rotate-y": `${round(centerY / 4)}deg`,
+        "--rotate-x": `${round(-(centerX / 5) * rotationMultiplier)}deg`,
+        "--rotate-y": `${round((centerY / 4) * rotationMultiplier)}deg`,
       };
 
       Object.entries(properties).forEach(([property, value]) => {
@@ -152,7 +181,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         }
       },
     };
-  }, [enableTilt]);
+  }, [enableTilt, accelerometerSensitivity]);
 
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
@@ -203,8 +232,42 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     [animationHandlers]
   );
 
+  // Accelerometer effect
   useEffect(() => {
-    if (!enableTilt || !animationHandlers) return;
+    if (!shouldUseAccelerometer || !animationHandlers || !accelerometer.hasPermission) return;
+
+    const card = cardRef.current;
+    const wrap = wrapRef.current;
+
+    if (!card || !wrap) return;
+
+    // Apply accelerometer data to card transform
+    const { x, y } = accelerometer.data;
+    
+    // Invert Y axis for natural tilt behavior (device tilt forward = card tilt forward)
+    animationHandlers.updateCardTransform(
+      x, 
+      -y, 
+      card, 
+      wrap, 
+      true // isAccelerometerInput
+    );
+
+    // Set active state for accelerometer mode
+    wrap.classList.add("active");
+    card.classList.add("active");
+
+  }, [accelerometer.data, shouldUseAccelerometer, animationHandlers, accelerometer.hasPermission]);
+
+  // Auto-request accelerometer permission on supported devices
+  useEffect(() => {
+    if (shouldUseAccelerometer && !accelerometer.hasPermission && accelerometer.isSupported) {
+      accelerometer.requestPermission().catch(console.warn);
+    }
+  }, [shouldUseAccelerometer, accelerometer.hasPermission, accelerometer.isSupported, accelerometer.requestPermission]);
+
+  useEffect(() => {
+    if (!enableTilt || !animationHandlers || shouldUseAccelerometer) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -243,6 +306,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     handlePointerMove,
     handlePointerEnter,
     handlePointerLeave,
+    shouldUseAccelerometer,
   ]);
 
   const cardStyle = useMemo(
