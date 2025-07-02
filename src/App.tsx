@@ -6,6 +6,9 @@ import { Onboarding } from "@/components/Onboarding"
 import ProfileCard from "@/components/ProfileCard/ProfileCard"
 import { Dock, DockIcon } from '@/components/magicui/dock'
 import { useDeviceDetection } from "@/hooks"
+// 21st.dev Toolbar imports
+import { StagewiseToolbar } from "@21st-extension/toolbar-react"
+import { ReactPlugin } from "@21st-extension/react"
 import { 
   Home, 
   Briefcase, 
@@ -19,6 +22,22 @@ import {
 function App() {
   // Always show main app, suppress onboarding for portfolio visitors
   const [showMainApp, setShowMainApp] = useState(true)
+  
+  // Safe toolbar render function
+  const renderToolbar = () => {
+    try {
+      return (
+        <StagewiseToolbar
+          config={{
+            plugins: [ReactPlugin],
+          }}
+        />
+      )
+    } catch (error) {
+      console.warn('21st.dev Toolbar failed to load:', error)
+      return null
+    }
+  }
   
   // Device detection for accelerometer feature
   const deviceCapabilities = useDeviceDetection()
@@ -133,6 +152,8 @@ function App() {
   if (showMainApp) {
     return (
       <TooltipProvider>
+        {/* 21st.dev Toolbar */}
+        {renderToolbar()}
         <div className="min-h-screen bg-background flex items-center justify-center p-2">
           <div className="fixed top-6 right-6">
             <ThemeToggle />
