@@ -40,7 +40,8 @@
 }
 
 .pc-card-wrapper.pc-contained {
-  min-height: 80vh;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .pc-card-wrapper {
@@ -51,9 +52,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: auto;
   width: 100%;
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
   background: transparent;
 }

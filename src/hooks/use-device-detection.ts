@@ -35,7 +35,7 @@ export function useDeviceDetection(): DeviceCapabilities {
       const isTouchDevice = 
         'ontouchstart' in window ||
         navigator.maxTouchPoints > 0 ||
-        (navigator as unknown as { msMaxTouchPoints?: number }).msMaxTouchPoints > 0
+        ((navigator as unknown as { msMaxTouchPoints?: number }).msMaxTouchPoints || 0) > 0
 
       // Screen size based detection
       const isMobile = screenWidth < MOBILE_BREAKPOINT

@@ -213,7 +213,7 @@ function App() {
               enableAccelerometer={deviceCapabilities.isMobile || deviceCapabilities.isTablet}
               accelerometerSensitivity={0.8}
               onContactClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
-              className="w-full max-w-md mx-auto -mt-4"
+              className="w-full max-w-md mx-auto mt-8"
             />
           </div>
 
