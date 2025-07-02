@@ -12,7 +12,13 @@
       "Bash(source:*)",
       "Bash(export:*)",
       "Bash(shadcn-ui --version)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "WebFetch(domain:phion.dev)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(vercel:*)"
     ],
     "deny": []
   }

@@ -1,9 +1,11 @@
 import { useState } from "react"
+import { Analytics } from "@vercel/analytics/react"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Onboarding } from "@/components/Onboarding"
 import ProfileCard from "@/components/ProfileCard/ProfileCard"
 import { Dock, DockIcon } from '@/components/magicui/dock'
+import { useDeviceDetection } from "@/hooks"
 import { 
   Home, 
   Briefcase, 
@@ -17,6 +19,9 @@ import {
 function App() {
   // Always show main app, suppress onboarding for portfolio visitors
   const [showMainApp, setShowMainApp] = useState(true)
+  
+  // Device detection for accelerometer feature
+  const deviceCapabilities = useDeviceDetection()
 
   const handleOnboardingComplete = () => {
     localStorage.setItem('phion-onboarding-completed', 'true')
@@ -148,7 +153,7 @@ function App() {
                 return (
                   <DockIcon
                     key={item.id}
-                    className="bg-background/50 hover:bg-accent/80 border border-border/20 hover:border-accent-foreground/20 transition-all duration-200 cursor-pointer relative z-50"
+                    className="bg-background/50 hover:bg-accent/80 border border-border/20 hover:border-accent-foreground/20 transition-[background-color,border-color,transform] duration-200 cursor-pointer relative z-50"
                     onClick={() => handleIconClick(item)}
                     onKeyDown={(event) => handleIconKeyDown(event, item)}
                     tabIndex={0}
@@ -177,6 +182,8 @@ function App() {
               contactText="Book a Call"
               showUserInfo={true}
               enableTilt={true}
+              enableAccelerometer={deviceCapabilities.isMobile || deviceCapabilities.isTablet}
+              accelerometerSensitivity={0.8}
               onContactClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
               className="w-full max-w-md mx-auto"
             />
@@ -191,6 +198,7 @@ function App() {
             </div>
           </footer>
         </div>
+        <Analytics />
       </TooltipProvider>
     )
   }
