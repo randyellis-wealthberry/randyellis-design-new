@@ -16,9 +16,9 @@ import {
   Mail, 
   Github, 
   Linkedin,
-  FileText,
-  Twitter
+  FileText
 } from 'lucide-react'
+import { XIcon } from "@/components/ui/social-links"
 
 function App() {
   // Always show main app, suppress onboarding for portfolio visitors
@@ -128,7 +128,7 @@ function App() {
     },
     {
       id: 'twitter',
-      icon: Twitter,
+      icon: XIcon,
       label: 'X (Twitter)',
       action: () => safeWindowOpen('https://x.com/iamrandyellis')
     }
