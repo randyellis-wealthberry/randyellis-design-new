@@ -155,13 +155,13 @@ function App() {
       <TooltipProvider>
         {/* 21st.dev Toolbar */}
         {renderToolbar()}
-        <div className="min-h-screen bg-background flex items-start justify-center pt-16 p-2">
+        <div className="min-h-screen bg-background flex items-start justify-center pt-6 p-2">
           <div className="fixed top-6 right-6">
             <ThemeToggle />
           </div>
           
           {/* Main content with Dock above ProfileCard */}
-          <div className="flex flex-col items-center space-y-2">
+          <div className="flex flex-col items-center">
             {/* Dock Navigation */}
             <Dock 
               className="bg-background/80 border-border/50 shadow-lg backdrop-blur-md !mt-0 !mb-0 relative z-50"
@@ -175,7 +175,7 @@ function App() {
                 return (
                   <DockIcon
                     key={item.id}
-                    className="bg-background/50 hover:bg-accent/80 border border-border/20 hover:border-accent-foreground/20 transition-[background-color,border-color,transform] duration-200 cursor-pointer relative z-50"
+                    className="border border-border/20 hover:border-accent-foreground/20 transition-[border-color,transform] duration-200 cursor-pointer relative z-50"
                     onClick={() => handleIconClick(item)}
                     onKeyDown={(event) => handleIconKeyDown(event, item)}
                     tabIndex={0}
@@ -195,7 +195,7 @@ function App() {
 
             {/* Hero Pill */}
             <AnimatedHeroPill
-              className="relative z-40"
+              className="relative z-40 my-8"
               onClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
             />
 
@@ -213,14 +213,14 @@ function App() {
               enableAccelerometer={deviceCapabilities.isMobile || deviceCapabilities.isTablet}
               accelerometerSensitivity={0.8}
               onContactClick={() => safeWindowOpen('https://calendly.com/randyellis/15min')}
-              className="w-full max-w-md mx-auto -mt-8"
+              className="w-full max-w-md mx-auto -mt-4"
             />
           </div>
 
           {/* Copyright Footer */}
           <footer className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t border-border/20 py-2">
             <div className="container mx-auto px-4">
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="text-center text-[10px] text-muted-foreground">
                 © Randy Ellis 2013-{new Date().getFullYear()} • All Rights Reserved
               </p>
             </div>
