@@ -36,30 +36,39 @@ pnpm type-check
 - **Icons**: Lucide React
 - **Notifications**: Sonner
 - **Cloud Sync**: Phion for real-time collaboration
-- **Toolbar**: @21st-extension for browser integration
+- **Analytics**: Vercel Analytics for usage tracking
 
 ### Project Structure
 - `src/App.tsx` - Main app with onboarding flow and localStorage-based state
-- `src/main.tsx` - React root with toolbar integration
+- `src/main.tsx` - React root with minimal setup
 - `src/components/ui/` - Reusable UI components (shadcn/ui based)
 - `src/components/Onboarding.tsx` - First-time user experience
 - `src/components/ProfileCard/` - Main profile showcase component
 - `src/lib/utils.ts` - Utility functions (cn for className merging)
-- `src/hooks/` - Custom React hooks
+- `src/hooks/` - Custom React hooks (mobile detection, accelerometer, device capabilities)
+- `src/components/magicui/dock.tsx` - Fixed navigation dock with animation effects
 
 ### Key Features
+
 - **Onboarding System**: First-time users see guided setup, returning users see main app
 - **Theme System**: Dark/light mode toggle with CSS custom properties
-- **Phion Integration**: Real-time sync and collaboration toolbar
+- **Phion Integration**: Real-time sync and collaboration
+- **Fixed Navigation Dock**: Left-side vertical dock with icon magnification effects
+- **Device Motion Support**: Accelerometer integration for interactive tilt effects
 - **Responsive Design**: Mobile-first approach with Tailwind utilities
 
 ### Import Patterns
+
 Components use path aliases:
+
 - `@/components/ui/button` for UI components
 - `@/lib/utils` for utilities
-- `@/hooks/use-mobile` for custom hooks
+- `@/hooks/use-mobile` for mobile detection
+- `@/hooks/use-accelerometer` for device motion
+- `@/hooks/use-device-detection` for device capabilities
 
 ### Development Process Rules
+
 - NEVER run development servers automatically - they're managed externally
 - NEVER run build processes without explicit user request
 - Always run type checking after completing functions
@@ -68,15 +77,19 @@ Components use path aliases:
 - Follow shadcn/ui patterns for new components
 
 ### Phion Configuration
+
 - Project syncs to cloud automatically when `pnpm sync` is running
-- Toolbar enabled by default in top position
 - WebSocket connection to `wss://api.phion.dev`
+- Configuration in `phion.config.json`
 
 ### Testing
+
 - No testing framework currently configured
 - Consider Jest, Vitest, or React Testing Library for future test implementation
 
 ## Component Registry Integration
+
 This project uses JSRepo for component discovery and sharing:
+
 - Configuration in `jsrepo.json`
 - Enables sharing and reusing UI components across projects
