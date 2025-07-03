@@ -23,7 +23,8 @@
       "Bash(pnpm lint:*)",
       "Bash(grep:*)",
       "Bash(git pull:*)",
-      "WebFetch(domain:fh.design)"
+      "WebFetch(domain:fh.design)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }

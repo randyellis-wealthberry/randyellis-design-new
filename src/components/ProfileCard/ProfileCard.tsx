@@ -5,6 +5,8 @@
 import React, { useEffect, useRef, useCallback, useMemo, useState } from "react";
 import "./ProfileCard.css";
 import { useAccelerometer, useDeviceDetection } from "@/hooks";
+import { Modal, ModalTrigger, ModalBody } from "@/components/ui/animated-modal";
+import { BookingModal } from "@/components/ui/booking-modal";
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -377,22 +379,18 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                   </div>
                 </div>
                 <div className="pc-actions">
-                  <button
-                    className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        handleContactClick();
-                      }
-                    }}
-                    style={{ pointerEvents: "auto" }}
-                    type="button"
-                    aria-label={`Contact ${name || "user"}`}
-                    tabIndex={0}
-                  >
-                    {contactText}
-                  </button>
+                  <Modal>
+                    <ModalTrigger
+                      className="pc-contact-btn"
+                      aria-label={`Contact ${name || "user"}`}
+                      style={{ pointerEvents: "auto" }}
+                    >
+                      {contactText}
+                    </ModalTrigger>
+                    <ModalBody>
+                      <BookingModal onBookingClick={handleContactClick} />
+                    </ModalBody>
+                  </Modal>
                 </div>
               </div>
             )}
