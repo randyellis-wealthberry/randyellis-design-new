@@ -23,7 +23,11 @@
       "Bash(pnpm lint:*)",
       "Bash(grep:*)",
       "Bash(git pull:*)",
-      "WebFetch(domain:fh.design)"
+      "WebFetch(domain:fh.design)",
+      "Bash(git branch:*)",
+      "Bash(mkdir:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm remove:*)"
     ],
     "deny": []
   }
