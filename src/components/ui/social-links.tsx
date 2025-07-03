@@ -92,10 +92,9 @@ AnimatedSocialLinks.displayName = 'AnimatedSocialLinks';
 
 export default AnimatedSocialLinks;
 
-interface IconProps {
+interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number
   className?: string
-  [key: string]: any
 }
 
 export const XIcon: React.FC<IconProps> = ({ 

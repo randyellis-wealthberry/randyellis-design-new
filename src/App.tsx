@@ -7,9 +7,6 @@ import ProfileCard from "@/components/ProfileCard/ProfileCard"
 import { Dock, DockIcon } from '@/components/magicui/dock'
 import { AnimatedHeroPill } from '@/components/ui/hero-pill'
 import { useDeviceDetection } from "@/hooks"
-// 21st.dev Toolbar imports
-import { StagewiseToolbar } from "@21st-extension/toolbar-react"
-import { ReactPlugin } from "@21st-extension/react"
 import { 
   Home, 
   Briefcase, 
@@ -23,22 +20,6 @@ import { XIcon } from "@/components/ui/social-links"
 function App() {
   // Always show main app, suppress onboarding for portfolio visitors
   const [showMainApp, setShowMainApp] = useState(true)
-  
-  // Safe toolbar render function
-  const renderToolbar = () => {
-    try {
-      return (
-        <StagewiseToolbar
-          config={{
-            plugins: [ReactPlugin],
-          }}
-        />
-      )
-    } catch (error) {
-      // 21st.dev Toolbar failed to load - silently fail
-      return null
-    }
-  }
   
   // Device detection for accelerometer feature
   const deviceCapabilities = useDeviceDetection()
@@ -153,9 +134,6 @@ function App() {
   if (showMainApp) {
     return (
       <TooltipProvider>
-        {/* 21st.dev Toolbar */}
-        {renderToolbar()}
-        
         {/* Fixed Single Column Dock */}
         <Dock 
           fixed={true}
